@@ -1,3 +1,8 @@
+require 'spec_helper'
+
+Dir[File.expand_path('../..',__FILE__) + "/lib/*.rb"].each {|f| require f }
+
+
 require 'stringio'
 
 def capture(stream)
@@ -12,6 +17,3 @@ def capture(stream)
 
   result
 end
-
-$LOAD_PATH.unshift(File.expand_path('../../lib/',__FILE__))
-require 'day4'
