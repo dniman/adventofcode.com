@@ -1,0 +1,1 @@
+1) I start program. I open a shell, type a command and see the answer
