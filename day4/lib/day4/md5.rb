@@ -18,7 +18,10 @@ module Day4
         message = message.chars.concat(Array.new(447){0}).join("")
       elsif message.length % 512 == 1
         message = message.chars.push(1).join("")
-        message = message.chars.concat(Array.new(446){0}).join("")  
+        message = message.chars.concat(Array.new(446){0}).join("")
+      elsif message.length % 512 == 2
+        message = message.chars.push(1).join("")
+        message = message.chars.concat(Array.new(445){0}).join("")    
       end  
       message
     end         
