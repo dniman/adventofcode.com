@@ -25,57 +25,62 @@ module Day4
     end   
 
     describe ".append_padding_bits" do
+      context "when message length mod 512 is 0" do
+        let(:message){ "" }
 
-      context "when message length mod 512 is <0" do
         it "appends 1 to message" do
-          expect(MD5.append_padding_bits("")[0]).to eq("1") 
+          expect(MD5.append_padding_bits(message)[0]).to eq("1") 
         end
 
         it "appends 447 0 to message" do
-          expect(MD5.append_padding_bits("")).to match(/0{447}/)
+          expect(MD5.append_padding_bits(message)[1..448]).to eq(Array.new(447){0}.join(""))
         end
       end
 
       context "when message length mod 512 is 1" do
+        let(:message) { "1" }
+
         it "appends 1 to message" do
-          expect(MD5.append_padding_bits("1")[1]).to eq("1")
+          expect(MD5.append_padding_bits(message)[1]).to eq("1")
         end  
 
         it "appends 446 0 to message" do
-          expect(MD5.append_padding_bits("1")[2..448]).to eq(Array.new(446){0}.join(""))
+          expect(MD5.append_padding_bits(message)[2..448]).to eq(Array.new(446){0}.join(""))
         end  
       end  
 
       context "when message length mod 512 is 2" do
+        let(:message) { "11" }
+
         it "appends 1 to message" do
-          expect(MD5.append_padding_bits("11")[2]).to eq("1")
+          expect(MD5.append_padding_bits(message)[2]).to eq("1")
         end
 
         it "appends 445 0 to message" do
-          expect(MD5.append_padding_bits("11")[3..448]).to eq(Array.new(445){0}.join(""))
+          expect(MD5.append_padding_bits(message)[3..448]).to eq(Array.new(445){0}.join(""))
         end  
       end  
 
       context "when message length mod 512 is 448" do
+        let(:message) { Array.new(448){1}.join("") }
+
         it "appends 1 to message" do
-          message = Array.new(448){1}.join("")
           expect(MD5.append_padding_bits(message)[448]).to eq("1")
         end  
 
         it "appends 511 0 to message" do
-          message = Array.new(448){1}.join("")
           expect(MD5.append_padding_bits(message)[449..960]).to eq(Array.new(511){0}.join(""))
         end  
       end  
 
       context "when message length mod 512 is 449" do
+        let(:message) { Array.new(449){1}.join("") }
+
         it "appends 1 to message" do
-          message = Array.new(449){1}.join("")
           expect(MD5.append_padding_bits(message)[449]).to eq("1")
         end  
 
         it "appends 510 0 to message" do
-          message = Array.new(449){1}.join("")
           expect(MD5.append_padding_bits(message)[450..960]).to eq(Array.new(510){0}.join(""))
         end 
       end  
