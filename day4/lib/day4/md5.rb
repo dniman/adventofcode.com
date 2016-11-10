@@ -15,7 +15,11 @@ module Day4
     def self.append_padding_bits(message)
       message_length = message.length % 512
       message = message.chars.push(1).join("")
-      message = message.chars.concat(Array.new(447-message_length){0}).join("")
+      if message_length < 448
+        message = message.chars.concat(Array.new(447-message_length){0}).join("")
+      elsif message_length == 448
+        message = message.chars.concat(Array.new(511){0}).join("")
+      end    
       message
     end         
   end    
