@@ -1,13 +1,19 @@
 module Day4
   RSpec.describe MD5 do
     describe ".hash" do
-      it "sends message digest in hexadecimal" do
-        expect(MD5.hash("")).to be_hexadecimal
-      end
+      it "should append padding bits" do
+        expect(MD5).to receive(:append_padding_bits).with("").once.and_call_original
+        MD5.append_padding_bits("")
+      end  
 
-      it "sends message digest length in 32" do
-        expect(MD5.hash("").length).to eq(32)
-      end
+
+      #it "sends message digest in hexadecimal" do
+      #  expect(MD5.hash("")).to be_hexadecimal
+      #end
+
+      #it "sends message digest length in 32" do
+      #  expect(MD5.hash("").length).to eq(32)
+      #end
 
       #context "append padding bits" do
       #  context "message length is 0" do
@@ -19,25 +25,36 @@ module Day4
     end   
 
     describe ".append_padding_bits" do
-      context "with length = 0" do
+
+      context "when message length mod 512 is 0" do
         it "appends 1 to message" do
-          expect(MD5.append_padding_bits("")).to match(/1{1}/) 
-        end  
+          expect(MD5.append_padding_bits("")[0]).to eq("1") 
+        end
 
         it "appends 447 0 to message" do
           expect(MD5.append_padding_bits("")).to match(/0{447}/)
-        end  
+        end
       end
 
-      context "with length = 1" do
+      context "when message length mod 512 is 1" do
         it "appends 1 to message" do
-          expect(MD5.append_padding_bits("1")).to match(/1/)
+          expect(MD5.append_padding_bits("1")[1]).to eq("1")
         end  
 
         it "appends 446 0 to message" do
-          expect(MD5.append_padding_bits("1")).to match(/0{446}/)
+          expect(MD5.append_padding_bits("1")[2..448]).to eq(Array.new(446){0}.join(""))
         end  
       end  
+
+    #  context "with length = 1" do
+    #    it "appends 1 to message" do
+    #      expect(MD5.append_padding_bits("1")).to match(/1/)
+    #    end  
+
+    #    it "appends 446 0 to message" do
+    #      expect(MD5.append_padding_bits("1")).to match(/0{446}/)
+    #    end  
+    #  end  
     end  
   end
 end
