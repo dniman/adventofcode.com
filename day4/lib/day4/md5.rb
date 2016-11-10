@@ -19,6 +19,8 @@ module Day4
         message = message.chars.concat(Array.new(447-message_length){0}).join("")
       elsif message_length == 448
         message = message.chars.concat(Array.new(511){0}).join("")
+      elsif message_length > 448
+        message = message.chars.concat(Array.new(959 - message_length){0}).join("")  
       end    
       message
     end         

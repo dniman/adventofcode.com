@@ -67,6 +67,18 @@ module Day4
           expect(MD5.append_padding_bits(message)[449..960]).to eq(Array.new(511){0}.join(""))
         end  
       end  
+
+      context "when message length mod 512 is 449" do
+        it "appends 1 to message" do
+          message = Array.new(449){1}.join("")
+          expect(MD5.append_padding_bits(message)[449]).to eq("1")
+        end  
+
+        it "appends 510 0 to message" do
+          message = Array.new(449){1}.join("")
+          expect(MD5.append_padding_bits(message)[450..960]).to eq(Array.new(510){0}.join(""))
+        end 
+      end  
     end  
   end
 end
